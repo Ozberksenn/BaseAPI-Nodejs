@@ -3,7 +3,15 @@ const user = require("../models/user.model");
 const APIError = require("../utils/errors");
 const Response = require("../utils/response");
 const login = async (req, res) => {
-  console.log(req.body);
+  const { email, password } = req.body;
+  // const user = user.findOne({email : req.body.email}) // bu şekilde de kullanılabilir ancak allta ki kullaım daha doğru.
+  const userInfo = await user.findOne({ email });
+  console.log(userInfo);
+  if (!userInfo) throw new APIError("Email ya da password hatalı ", 401);
+
+  const comparePasword = await bcyrpt.compare(password, userInfo.password);
+  if (!comparePasword) throw new APIError("Email ya da password hatalı ", 401);
+
   return res.json(req.body);
 };
 const register = async (req, res) => {

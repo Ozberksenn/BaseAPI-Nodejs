@@ -57,6 +57,39 @@ class authValidation {
     next(); // burada next yazmamızın amacı bir ara yazılım yaptık ve devam etmesi gerekir bu yüzden next() demeliyiz.
     //
   };
+  static login = async (req, res, next) => {
+    try {
+      await joi
+        .object({
+          email: joi
+            .string()
+            .email()
+            .trim()
+            .min(3)
+            .max(50)
+            .required()
+            .messages({
+              "string.base": "Email alanı normal metin olmalıdır.",
+              "string.empty": "Email alanı boş olamaz",
+              "string.email": "Lütfen geçerli bir email giriniz.",
+              "string.min": "Email alanı en az üç karakter olmalıdır.",
+              "string.max": "Email alanı en fazla 100 karakterden oluşabilir.",
+              "string.required": "Email alanı zorunludur.",
+            }),
+          password: joi.string().trim().min(6).max(36).required().messages({
+            "string.base": "Şifre alanı normal metin olmalıdır.",
+            "string.empty": "Şifre alanı boş olamaz",
+            "string.min": "Şifre alanı en az altı karakter olmalıdır.",
+            "string.max": "Şifre alanı en fazla 100 karakterden oluşabilir.",
+            "string.required": "Şifre alanı zorunludur.",
+          }),
+        })
+        .validateAsync(req.body);
+    } catch (error) {
+      throw new APIError(error.detail[0].messages, 400);
+    }
+    next();
+  };
 }
 
 module.exports = authValidation;
