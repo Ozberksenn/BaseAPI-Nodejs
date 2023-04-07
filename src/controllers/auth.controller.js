@@ -1,6 +1,7 @@
 const bcyrpt = require("bcrypt");
 const user = require("../models/user.model");
 const APIError = require("../utils/errors");
+const Response = require("../utils/response");
 const login = async (req, res) => {
   console.log(req.body);
   return res.json(req.body);
@@ -16,23 +17,16 @@ const register = async (req, res) => {
   console.log("hesh sifre:", req.body.password);
 
   // veritabanına kaydediyoruz.
-  try {
-    const userSave = new user(req.body);
-    await userSave
-      .save()
-      .then((response) => {
-        return res.status(201).json({
-          success: true,
-          data: response,
-          message: "kayıt başarıyla eklendi.",
-        });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  } catch (error) {
-    console.log(": ", error);
-  }
+  const userSave = new user(req.body);
+  await userSave
+    .save()
+    .then((data) => {
+      return new Response(data, "Kayıt başarıyla eklendi").created(res);
+      // created Response class içerisinde tanımladığımız bir method.
+    })
+    .catch((err) => {
+      throw new APIError("Kullanıcı kayıt edilmedi !", 400);
+    });
 };
 
 module.exports = { login, register };
