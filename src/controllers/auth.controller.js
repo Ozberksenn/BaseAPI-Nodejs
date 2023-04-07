@@ -24,8 +24,8 @@ const register = async (req, res) => {
       return new Response(data, "Kayıt başarıyla eklendi").created(res);
       // created Response class içerisinde tanımladığımız bir method.
     })
-    .catch((err) => {
-      throw new APIError("Kullanıcı kayıt edilmedi !", 400);
+    .catch(() => {
+      throw new APIError("Kayıt Edilemedi !", 400);
     });
 };
 
