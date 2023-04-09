@@ -18,7 +18,6 @@ app.get("/", (req, res) => {
     message: "hoş geldiniz",
   });
 });
-
 app.use("/api", router);
 // catch error
 app.use(errorHandlerMiddleware);

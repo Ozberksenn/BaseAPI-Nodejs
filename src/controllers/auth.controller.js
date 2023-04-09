@@ -6,6 +6,7 @@ const Response = require("../utils/response");
 
 const login = async (req, res) => {
   const { email, password } = req.body;
+
   // const user = user.findOne({email : req.body.email}) // bu şekilde de kullanılabilir ancak allta ki kullaım daha doğru.
   const userInfo = await user.findOne({ email });
   console.log(userInfo);
@@ -40,4 +41,8 @@ const register = async (req, res) => {
     });
 };
 
-module.exports = { login, register };
+const me = async (req, res) => {
+  return new Response(req.user).success(res);
+};
+
+module.exports = { login, register, me };
