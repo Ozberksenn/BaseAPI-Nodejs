@@ -6,6 +6,7 @@ require("./src/db/dbConnection");
 const port = process.env.PORT || 5001;
 const router = require("./src/routers/index");
 const errorHandlerMiddleware = require("./src/middlewares/errorHandler");
+const mongoSanitize = require("express-mongo-sanitize");
 //Middlewares
 app.use(express.json());
 // app.use(express.json({ limit: "50mb" }));
@@ -18,6 +19,13 @@ app.get("/", (req, res) => {
     message: "hoş geldiniz",
   });
 });
+
+app.use(
+  mongoSanitize({
+    replaceWith: "_",
+  })
+);
+
 app.use("/api", router);
 // catch error
 app.use(errorHandlerMiddleware);
