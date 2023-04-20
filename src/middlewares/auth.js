@@ -20,6 +20,7 @@ const createToken = async (user, res) => {
     success: true,
     token,
     message: "Başarılı",
+    user,
   });
 };
 const tokenCheck = async (req, res, next) => {

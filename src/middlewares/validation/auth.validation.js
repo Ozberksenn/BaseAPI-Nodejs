@@ -48,6 +48,11 @@ class authValidation {
             "string.max": "Şifre alanı en fazla 100 karakterden oluşabilir.",
             "string.required": "Şifre alanı zorunludur.",
           }),
+          profilePhoto: joi.string().trim().required().messages({
+            "string.base": "image alanı normal metin olmalıdır.",
+            "string.empty": "image alanı boş olamaz",
+            "string.required": "profilePhoto alanı zorunludur.",
+          }),
         })
         .validateAsync(req.body);
       // sonuna validateAsync(req.body) ekledik çünkü bodyden gelen değerleri alacak ve password mail kontrol edecek.

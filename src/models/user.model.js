@@ -23,6 +23,11 @@ const userSchema = new mongoose.Schema(
       required: true,
       trim: true, // trim girilen string ifadenin başında ve sonunda boşluk varsa siler.
     },
+    profilePhoto: {
+      type: String,
+      required: true,
+      trim: true, // trim girilen string ifadenin başında ve sonunda boşluk varsa siler.
+    },
   },
   { collection: "users", timestamps: true }
 );
